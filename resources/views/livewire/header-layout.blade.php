@@ -24,7 +24,24 @@
                         </div>
                     </div>
 
-                    @include('components.theme-toggle')
+                    <div class="border-t border-gray-200/80 dark:border-[#3c3c3c] flex justify-center">
+                        <div class="mx-4 my-2">
+                            <div class="flex z-50 space-x-1">
+                                <div wire:click='profileToggle'
+                                    class="rounded-md cursor-pointer hover:text-gray-500 px-7 py-2 duration-100"
+                                    @click="darkMode= false"
+                                    :class="darkMode ? 'text-gray-800 dark:text-gray-50' : 'bg-gray-100 text-green-500'">
+                                    <i class="ri-sun-line text-lg"></i>
+                                </div>
+                                <div wire:click='profileToggle'
+                                    class="rounded-md cursor-pointer hover:text-gray-500 px-7 py-2 duration-100"
+                                    @click="darkMode= true"
+                                    :class="darkMode ? 'bg-[#303030] text-green-500' : 'text-gray-800'">
+                                    <i class="ri-moon-fill text-lg"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="border-t border-gray-200/80 dark:border-[#3c3c3c]">
                         <div class="mx-1 pt-2">
