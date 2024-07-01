@@ -18,28 +18,28 @@
             </h1>
         </div>
         <div class="mt-10 flex flex-col gap-4 relative text-gray-800 dark:text-gray-50">
-            <a href=""
-                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-green-400 dark:hover:text-gray-800 rounded-md">
+            <a href="{{ route('dashboard.index') }}" wire:navigate
+                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-green-500 hover:text-gray-50 dark:hover:text-gray-800 dark:text-gray-50 rounded-md {{ request()->is('dashboard*') ? 'bg-green-500 text-gray-50' : 'text-gray-800 ' }}">
                 <i class="ri-home-2-line text-lg"></i>
                 <h2 class="whitespace-pre duration-300 capitalize">Dashboard</h2>
             </a>
             <a href=""
-                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-green-400 dark:hover:text-gray-800 rounded-md">
+                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-green-500 hover:text-gray-50 dark:hover:text-gray-800 dark:text-gray-50 rounded-md {{ request()->is('transaction*') ? 'bg-green-500 text-gray-50' : 'text-gray-800 ' }}">
                 <i class="ri-arrow-left-right-line text-lg"></i>
                 <h2 class="whitespace-pre duration-300 capitalize">Transaction</h2>
             </a>
-            <a href=""
-                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-green-400 dark:hover:text-gray-800 rounded-md">
+            <a href="{{ route('console.index') }}" wire:navigate
+                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-green-500 hover:text-gray-50 dark:hover:text-gray-800 dark:text-gray-50 rounded-md {{ request()->is('consoles*') ? 'bg-green-500 text-gray-50' : 'text-gray-800 ' }}">
                 <i class="ri-gamepad-line text-lg"></i>
                 <h2 class="whitespace-pre duration-300 capitalize">Console</h2>
             </a>
-            <a href=""
-                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-green-400 dark:hover:text-gray-800 rounded-md">
+            <a href="" wire:navigate
+                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-green-500 hover:text-gray-50 dark:hover:text-gray-800 dark:text-gray-50 rounded-md {{ request()->is('menus*') ? 'bg-green-500 text-gray-50' : 'text-gray-800 ' }}">
                 <i class="ri-restaurant-2-line text-lg"></i>
                 <h2 class="whitespace-pre duration-300 capitalize">Menu</h2>
             </a>
-            <a href=""
-                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-green-400 dark:hover:text-gray-800 rounded-md">
+            <a href="" wire:navigate
+                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-green-500 hover:text-gray-50 dark:hover:text-gray-800 dark:text-gray-50 rounded-md {{ request()->is('reports*') ? 'bg-green-500 text-gray-50' : 'text-gray-800 ' }}">
                 <i class="ri-file-text-line text-lg"></i>
                 <h2 class="whitespace-pre duration-300 capitalize">Report</h2>
             </a>
