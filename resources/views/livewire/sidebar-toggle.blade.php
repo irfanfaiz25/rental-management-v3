@@ -18,31 +18,13 @@
             </h1>
         </div>
         <div class="mt-10 flex flex-col gap-4 relative text-gray-800 dark:text-gray-50">
-            <a href="{{ route('dashboard.index') }}" wire:navigate
-                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-[#f2f2f2] dark:hover:bg-[#252525] hover:text-green-500 dark:hover:text-gray-800 dark:text-gray-50 rounded-md {{ request()->is('dashboard*') ? 'bg-[#f2f2f2] text-green-500' : 'text-gray-800 ' }}">
-                <i class="ri-home-2-line text-lg"></i>
-                <h2 class="whitespace-pre duration-300 capitalize">Dashboard</h2>
-            </a>
-            <a href=""
-                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-[#f2f2f2] dark:hover:bg-[#252525] hover:text-green-500 dark:hover:text-gray-800 dark:text-gray-50 rounded-md {{ request()->is('transaction*') ? 'bg-[#f2f2f2] text-green-500' : 'text-gray-800 ' }}">
-                <i class="ri-arrow-left-right-line text-lg"></i>
-                <h2 class="whitespace-pre duration-300 capitalize">Transaction</h2>
-            </a>
-            <a href="{{ route('console.index') }}" wire:navigate
-                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-[#f2f2f2] dark:hover:bg-[#252525] hover:text-green-500 dark:hover:text-gray-800 dark:text-gray-50 rounded-md {{ request()->is('consoles*') ? 'bg-[#f2f2f2] text-green-500' : 'text-gray-800 ' }}">
-                <i class="ri-gamepad-line text-lg"></i>
-                <h2 class="whitespace-pre duration-300 capitalize">Console</h2>
-            </a>
-            <a href="" wire:navigate
-                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-[#f2f2f2] dark:hover:bg-[#252525] hover:text-green-500 dark:hover:text-gray-800 dark:text-gray-50 rounded-md {{ request()->is('menus*') ? 'bg-[#f2f2f2] text-green-500' : 'text-gray-800 ' }}">
-                <i class="ri-restaurant-2-line text-lg"></i>
-                <h2 class="whitespace-pre duration-300 capitalize">Menu</h2>
-            </a>
-            <a href="" wire:navigate
-                class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-[#f2f2f2] dark:hover:bg-[#252525] hover:text-green-500 dark:hover:text-gray-800 dark:text-gray-50 rounded-md {{ request()->is('reports*') ? 'bg-[#f2f2f2] text-green-500' : 'text-gray-800 ' }}">
-                <i class="ri-file-text-line text-lg"></i>
-                <h2 class="whitespace-pre duration-300 capitalize">Report</h2>
-            </a>
+            @foreach ($sidebarMenu as $menu)
+                <a href="{{ route($menu['route']) }}" wire:navigate
+                    class="group flex items-center text-sm h-12 gap-3.5 font-medium p-2 pl-5 hover:bg-[#f2f2f2] dark:hover:bg-[#252525] hover:text-green-500 dark:hover:text-green-500 rounded-md {{ request()->is($menu['request']) ? 'bg-[#f2f2f2] dark:bg-[#252525] text-green-500' : 'text-gray-800 dark:text-gray-50' }}">
+                    <i class="{{ $menu['icon'] }} text-lg"></i>
+                    <h2 class="whitespace-pre duration-300 capitalize">{{ $menu['name'] }}</h2>
+                </a>
+            @endforeach
         </div>
     </div>
 </div>
