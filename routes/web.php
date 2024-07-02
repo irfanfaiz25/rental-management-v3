@@ -9,3 +9,15 @@ Route::get('/dashboard', function () {
 Route::get('/consoles', function () {
     return view('contents.console');
 })->name('console.index');
+
+Route::get('/transactions', function () {
+    return view('contents.console');
+})->name('transaction.index');
+
+Route::get('/menus', function () {
+    return view('contents.console');
+})->name('menu.index');
+
+Route::get('/reports', function () {
+    return view('contents.console');
+})->name('report.index');
