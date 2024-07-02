@@ -9,7 +9,7 @@
     <div class="relative flex items-center space-x-4">
         <!-- Profile Toggle Button -->
         <button wire:click='profileToggle' class="focus:outline-none">
-            <i class="ri-account-circle-line text-3xl"></i>
+            <i class="ri-account-circle-fill text-3xl"></i>
         </button>
 
         <!-- Dropdown Menu -->
@@ -19,7 +19,7 @@
                 <div class="py-2">
                     <div class="px-4 pt-1 pb-2">
                         <div class="flex items-center space-x-2 pl-1 py-1">
-                            <i class="ri-account-circle-line text-2xl"></i>
+                            <i class="ri-account-circle-fill text-2xl"></i>
                             <span class="font-semibold">Aji</span>
                         </div>
                     </div>

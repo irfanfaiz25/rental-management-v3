@@ -15,7 +15,7 @@ Route::get('/transactions', function () {
 })->name('transaction.index');
 
 Route::get('/menus', function () {
-    return view('contents.console');
+    return view('contents.menu');
 })->name('menu.index');
 
 Route::get('/reports', function () {

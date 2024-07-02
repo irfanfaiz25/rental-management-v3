@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" x-data="{ darkMode: false }" :class="{ 'dark': darkMode === true }" class="antialiased">
+<html lang="en" x-data="{ darkMode: true }" :class="{ 'dark': darkMode === true }" class="antialiased">
 
 <head>
     <meta charset="UTF-8">

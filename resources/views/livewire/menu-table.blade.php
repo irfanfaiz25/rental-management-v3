@@ -1,8 +1,22 @@
 <div>
-    <div class="flex justify-end items-center mb-3">
+    <div class="block md:flex justify-between items-center mb-3 space-y-2 md:space-x-1 md:space-y-0">
+        <div class="block md:flex justify-start items-center space-y-1 md:space-x-1 md:space-y-0">
+            <button wire:click="setFilter(null)"
+                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == null ? 'bg-green-500 text-gray-50' : '' }} hover:bg-green-500 hover:text-gray-50 text-gray-800 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
+                all
+            </button>
+            <button wire:click="setFilter('makanan')"
+                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == 'makanan' ? 'bg-green-500 text-gray-50' : '' }}  hover:bg-green-500 hover:text-gray-50 text-gray-800 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
+                makanan
+            </button>
+            <button wire:click="setFilter('minuman')"
+                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == 'minuman' ? 'bg-green-500 text-gray-50' : '' }}  hover:bg-green-500 hover:text-gray-50 text-gray-800 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
+                minuman
+            </button>
+        </div>
         <button wire:click="$set('isModalShow', true)"
             class="px-6 py-2 bg-green-500 hover:bg-green-700 text-gray-50 rounded-md text-sm font-semibold">
-            New Console
+            New Menu
         </button>
     </div>
     <div class="relative overflow-x-auto drop-shadow-lg sm:rounded-lg">
@@ -16,7 +30,7 @@
                         Name
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Model
+                        Category
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Price
@@ -30,36 +44,31 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($consoles as $index => $console)
+                @foreach ($menus as $index => $menu)
                     <tr
                         class="odd:bg-white odd:dark:bg-[#343434] even:bg-gray-50 even:dark:bg-[#383838] border-b dark:border-[#414040]">
                         <td class="px-6 py-3">
-                            {{ $consoles->firstItem() + $index }}
+                            {{ $menus->firstItem() + $index }}
                         </td>
                         <td class="px-6 py-3 capitalize">
-                            {{ $console->name }}
+                            {{ $menu->name }}
                         </td>
                         <td class="px-6 py-3 capitalize">
-                            {{ $console->model }}
+                            {{ $menu->category }}
                         </td>
                         <td class="px-6 py-3">
-                            @currency($console->price)
+                            @currency($menu->price)
                         </td>
                         <td class="px-6 py-3">
-                            <span class="flex items-center text-sm font-medium text-gray-800 dark:text-gray-50 me-3">
-                                <span
-                                    class="flex w-2 h-2 {{ $console->is_active ? 'bg-green-500' : 'bg-red-500' }} rounded-full me-1.5 flex-shrink-0"></span>
-
-                                {{ $console->is_active ? 'Active' : 'Inactive' }}
-                            </span>
+                            @livewire('toggle-is-menu-active', ['menu' => $menu], key($menu->id))
                         </td>
                         <td class="px-6 py-3">
                             <div class="flex justify-start items-center space-x-1">
-                                <button wire:click='setModalEdit({{ $console->id }})'
+                                <button wire:click='setModalEdit({{ $menu->id }})'
                                     class="text-green-500 hover:text-white border border-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-semibold rounded-lg text-xs px-4 py-1 text-center dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
                                     Edit
                                 </button>
-                                <button wire:click="showConfirmationDelete({{ $console->id }},'{{ $console->name }}')"
+                                <button wire:click="showConfirmationDelete({{ $menu->id }},'{{ $menu->name }}')"
                                     class="text-red-500 hover:text-white border border-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-xs px-4 py-1 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-800">
                                     Delete
                                 </button>
@@ -72,7 +81,7 @@
     </div>
 
     <div class="mt-4">
-        {{ $consoles->links() }}
+        {{ $menus->links() }}
     </div>
 
     @if ($isModalShow)
@@ -84,10 +93,10 @@
                         {{ $isEdit ? 'Edit Data' : 'Add Data' }}
                     </h2>
                 </div>
-                <form wire:submit.prevent='{{ $isEdit ? 'updateConsole' : 'storeConsole' }}'>
+                <form wire:submit.prevent='{{ $isEdit ? 'updateMenu' : 'storeMenu' }}'>
                     <div class="mb-2">
                         <label for="name" class="block mb-1 text-sm font-bold">
-                            Console Name
+                            Menu Name
                         </label>
                         <input wire:model='name' type="text" id="text"
                             class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('name') border-red-500 @enderror" />
@@ -98,16 +107,16 @@
                         @enderror
                     </div>
                     <div class="mb-2">
-                        <label for="model" class="block mb-1 text-sm font-bold">
+                        <label for="category" class="block mb-1 text-sm font-bold">
                             Model
                         </label>
-                        <select wire:model='model' type="text" id="text"
-                            class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 py-2.5 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('model') border-red-500 @enderror">
-                            <option value="">--pilih model--</option>
-                            <option value="PS 3">PS 3</option>
-                            <option value="PS 4">PS 4</option>
+                        <select wire:model='category' type="text" id="text"
+                            class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 py-2.5 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('category') border-red-500 @enderror">
+                            <option value="">--pilih category--</option>
+                            <option value="makanan">Makanan</option>
+                            <option value="minuman">Minuman</option>
                         </select>
-                        @error('model')
+                        @error('category')
                             <p class="mt-2 text-xs text-red-600">
                                 {{ $message }}
                             </p>
@@ -157,7 +166,7 @@
                             class="px-5 py-2 bg-gray-100 rounded-md text-gray-800 font-bold text-sm hover:bg-gray-200">
                             Cancel
                         </button>
-                        <button wire:click='deleteConsole'
+                        <button wire:click='deleteMenu'
                             class="px-5 py-2 bg-red-500 rounded-md text-gray-50 font-bold text-sm hover:bg-red-700">
                             Delete Data
                         </button>
