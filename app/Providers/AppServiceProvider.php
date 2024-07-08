@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
@@ -23,5 +24,13 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('currency', function ($expression) {
             return "Rp. <?php echo number_format($expression,0,',','.'); ?>";
         });
+
+        Blade::directive('hour', function ($expression) {
+            return "<?php echo \Carbon\Carbon::parse($expression)->format('H:i'); ?>";
+        });
+
+        Paginator::defaultView('view-name');
+
+        Paginator::defaultSimpleView('view-name');
     }
 }

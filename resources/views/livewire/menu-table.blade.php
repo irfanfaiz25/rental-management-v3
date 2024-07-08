@@ -2,15 +2,15 @@
     <div class="block md:flex justify-between items-center mb-3 space-y-2 md:space-x-1 md:space-y-0">
         <div class="block md:flex justify-start items-center space-y-1 md:space-x-1 md:space-y-0">
             <button wire:click="setFilter(null)"
-                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == null ? 'bg-green-500 text-gray-50' : '' }} hover:bg-green-500 hover:text-gray-50 text-gray-800 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
+                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == null ? 'bg-green-500 text-gray-50' : 'text-gray-800' }} hover:bg-green-500 hover:text-gray-50 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
                 all
             </button>
             <button wire:click="setFilter('makanan')"
-                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == 'makanan' ? 'bg-green-500 text-gray-50' : '' }}  hover:bg-green-500 hover:text-gray-50 text-gray-800 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
+                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == 'makanan' ? 'bg-green-500 text-gray-50' : 'text-gray-800' }}  hover:bg-green-500 hover:text-gray-50 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
                 makanan
             </button>
             <button wire:click="setFilter('minuman')"
-                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == 'minuman' ? 'bg-green-500 text-gray-50' : '' }}  hover:bg-green-500 hover:text-gray-50 text-gray-800 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
+                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == 'minuman' ? 'bg-green-500 text-gray-50' : 'text-gray-800' }}  hover:bg-green-500 hover:text-gray-50 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
                 minuman
             </button>
         </div>
@@ -98,7 +98,7 @@
                         <label for="name" class="block mb-1 text-sm font-bold">
                             Menu Name
                         </label>
-                        <input wire:model='name' type="text" id="text"
+                        <input wire:model='name' type="text" id="name"
                             class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('name') border-red-500 @enderror" />
                         @error('name')
                             <p class="mt-2 text-xs text-red-600">
@@ -110,7 +110,7 @@
                         <label for="category" class="block mb-1 text-sm font-bold">
                             Model
                         </label>
-                        <select wire:model='category' type="text" id="text"
+                        <select wire:model='category' type="text" id="category"
                             class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 py-2.5 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('category') border-red-500 @enderror">
                             <option value="">--pilih category--</option>
                             <option value="makanan">Makanan</option>
@@ -126,7 +126,7 @@
                         <label for="price" class="block mb-1 text-sm font-bold">
                             Price
                         </label>
-                        <input wire:model='price' type="text" id="text"
+                        <input wire:model='price' type="text" id="price"
                             class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('price') border-red-500 @enderror" />
                         @error('price')
                             <p class="mt-2 text-xs text-red-600">

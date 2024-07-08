@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('consoles')->insert([
-            'name' => 'TV06',
+            'name' => 'TV07',
             'model' => 'PS 4',
             'price' => 8000
         ]);

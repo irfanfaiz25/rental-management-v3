@@ -20,4 +20,9 @@ class Rental extends Model
     {
         return $this->belongsTo(Console::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

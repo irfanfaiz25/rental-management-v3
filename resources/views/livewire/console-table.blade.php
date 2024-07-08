@@ -89,7 +89,7 @@
                         <label for="name" class="block mb-1 text-sm font-bold">
                             Console Name
                         </label>
-                        <input wire:model='name' type="text" id="text"
+                        <input wire:model='name' type="text" id="name"
                             class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('name') border-red-500 @enderror" />
                         @error('name')
                             <p class="mt-2 text-xs text-red-600">
@@ -101,7 +101,7 @@
                         <label for="model" class="block mb-1 text-sm font-bold">
                             Model
                         </label>
-                        <select wire:model='model' type="text" id="text"
+                        <select wire:model='model' type="text" id="model"
                             class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 py-2.5 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('model') border-red-500 @enderror">
                             <option value="">--pilih model--</option>
                             <option value="PS 3">PS 3</option>
@@ -117,7 +117,7 @@
                         <label for="price" class="block mb-1 text-sm font-bold">
                             Price
                         </label>
-                        <input wire:model='price' type="text" id="text"
+                        <input wire:model='price' type="text" id="price"
                             class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('price') border-red-500 @enderror" />
                         @error('price')
                             <p class="mt-2 text-xs text-red-600">
@@ -148,7 +148,7 @@
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-200">
                         Are you sure you want to delete {{ $deleteName }}?
                     </h2>
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-50">
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                         Once the data is deleted, all of its resources and data
                         will be permanently deleted.
                     </p>
