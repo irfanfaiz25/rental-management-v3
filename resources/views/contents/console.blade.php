@@ -12,7 +12,7 @@
             </h1>
         </div>
     </div>
-    <div class="mt-6 ml-1">
+    <div class="mt-6">
         @livewire('console-table')
     </div>
 @endsection

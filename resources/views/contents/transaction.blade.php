@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-    <div class="mt-2 ml-1">
+    <div class="mt-2">
         <div class="flex flex-wrap">
             @livewire('transaction-card')
 

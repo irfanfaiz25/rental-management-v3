@@ -173,7 +173,7 @@ class TransactionForm extends Component
             ]);
 
             Income::create([
-                'source' => 'food and drink',
+                'source' => 'other',
                 'amount' => $convertedTotalOrders,
                 'notes' => $this->notes
             ]);
@@ -287,7 +287,7 @@ class TransactionForm extends Component
         }
 
         Income::create([
-            'source' => 'food and drink',
+            'source' => 'other',
             'amount' => $this->grandTotal,
             'notes' => $this->orderNotes
         ]);
