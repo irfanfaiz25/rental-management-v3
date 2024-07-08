@@ -2,15 +2,15 @@
     <div class="block md:flex justify-between items-center mb-3 space-y-2 md:space-x-1 md:space-y-0">
         <div class="block md:flex justify-start items-center space-y-1 md:space-x-1 md:space-y-0">
             <button wire:click="setFilter(null)"
-                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == null ? 'bg-green-500 text-gray-50' : 'text-gray-800' }} hover:bg-green-500 hover:text-gray-50 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
+                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == null ? 'bg-green-500 text-gray-50' : 'text-gray-800' }} hover:bg-green-500 hover:text-gray-50 dark:text-gray-50 rounded-full text-sm font-semibold capitalize">
                 all
             </button>
             <button wire:click="setFilter('makanan')"
-                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == 'makanan' ? 'bg-green-500 text-gray-50' : 'text-gray-800' }}  hover:bg-green-500 hover:text-gray-50 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
+                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == 'makanan' ? 'bg-green-500 text-gray-50' : 'text-gray-800' }}  hover:bg-green-500 hover:text-gray-50 dark:text-gray-50 rounded-full text-sm font-semibold capitalize">
                 makanan
             </button>
             <button wire:click="setFilter('minuman')"
-                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == 'minuman' ? 'bg-green-500 text-gray-50' : 'text-gray-800' }}  hover:bg-green-500 hover:text-gray-50 dark:text-gray-50 rounded-md text-sm font-semibold capitalize">
+                class="px-6 py-1 border-2 border-green-500 {{ $filterCategory == 'minuman' ? 'bg-green-500 text-gray-50' : 'text-gray-800' }}  hover:bg-green-500 hover:text-gray-50 dark:text-gray-50 rounded-full text-sm font-semibold capitalize">
                 minuman
             </button>
         </div>
