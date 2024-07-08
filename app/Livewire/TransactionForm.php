@@ -35,6 +35,7 @@ class TransactionForm extends Component
     public $grandTotal = 0;
     public $menuFilter = null;
     public $searchMenuName = null;
+    public $orderNotes;
 
 
     public function render()
@@ -174,7 +175,7 @@ class TransactionForm extends Component
             Income::create([
                 'source' => 'food and drink',
                 'amount' => $convertedTotalOrders,
-                'description' => $this->notes
+                'notes' => $this->notes
             ]);
 
             $this->resetRentalDetails();
@@ -198,7 +199,7 @@ class TransactionForm extends Component
     public function setNewOrderModalClose()
     {
         $this->isNewOrderModalShow = false;
-        $this->reset('orders', 'menuFilter', 'searchMenuName', 'grandTotal');
+        $this->reset('orders', 'menuFilter', 'searchMenuName', 'grandTotal', 'orderNotes');
         $this->resetPage('new-cash-order');
     }
 
@@ -276,7 +277,6 @@ class TransactionForm extends Component
 
     public function storeOrders()
     {
-        dd($this->orders);
         foreach ($this->orders as $order) {
             Order::create([
                 'rental_id' => 0,
@@ -285,6 +285,12 @@ class TransactionForm extends Component
                 'total_price' => $order['quantity'] * $order['price']
             ]);
         }
+
+        Income::create([
+            'source' => 'food and drink',
+            'amount' => $this->grandTotal,
+            'notes' => $this->orderNotes
+        ]);
 
         $this->setNewOrderModalClose();
 
