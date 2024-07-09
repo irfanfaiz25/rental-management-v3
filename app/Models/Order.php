@@ -17,7 +17,7 @@ class Order extends Model
 
     public function rental()
     {
-        return $this->belongsTo('rentals');
+        return $this->belongsTo(Rental::class);
     }
 
     public function menu()

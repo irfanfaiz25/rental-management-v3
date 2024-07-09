@@ -28,7 +28,7 @@ class RentalHistoryTab extends Component
                 ]);
             })
             ->latest()
-            ->paginate(6, pageName: 'rental-income');
+            ->paginate(6, pageName: 'rentals-history');
         return view('livewire.rental-history-tab', [
             'rentals' => $rentals
         ]);
@@ -36,17 +36,17 @@ class RentalHistoryTab extends Component
 
     public function updatingSearch()
     {
-        $this->resetPage('rental-income');
+        $this->resetPage('rentals-history');
     }
 
     public function updatingDateFilterStart()
     {
-        $this->resetPage('rental-income');
+        $this->resetPage('rentals-history');
     }
 
     public function updatingDateFilterEnd()
     {
-        $this->resetPage('rental-income');
+        $this->resetPage('rentals-history');
     }
 
     public function resetRentalFilter()
