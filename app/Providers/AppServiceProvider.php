@@ -29,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
             return "<?php echo \Carbon\Carbon::parse($expression)->format('H:i'); ?>";
         });
 
+        Blade::directive('date', function ($expression) {
+            return "<?php echo \Carbon\Carbon::parse($expression)->format('d-m-Y H:i'); ?>";
+        });
+
         Paginator::defaultView('view-name');
 
         Paginator::defaultSimpleView('view-name');

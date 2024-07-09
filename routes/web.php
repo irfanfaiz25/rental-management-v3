@@ -19,5 +19,5 @@ Route::get('/menus', function () {
 })->name('menu.index');
 
 Route::get('/reports', function () {
-    return view('contents.console');
+    return view('contents.report');
 })->name('report.index');
