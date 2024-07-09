@@ -31,7 +31,7 @@ class OrderHistoryTab extends Component
                 $query->where('rental_id', 0);
             })
             ->when($this->dateFilterStart && $this->dateFilterEnd, function ($query) {
-                $query->whereBetween('created_at', [
+                $query->whereBetween('reporting_date', [
                     $this->dateFilterStart . ' 00:00:00',
                     $this->dateFilterEnd . ' 23:59:59'
                 ]);

@@ -12,7 +12,8 @@ class Order extends Model
         'rental_id',
         'menu_id',
         'quantity',
-        'total_price'
+        'total_price',
+        'reporting_date'
     ];
 
     public function rental()

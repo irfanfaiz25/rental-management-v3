@@ -229,7 +229,8 @@ class TransactionCard extends Component
                 'rental_id' => $this->rentalId,
                 'menu_id' => $order['id'],
                 'quantity' => $order['quantity'],
-                'total_price' => $order['quantity'] * $order['price']
+                'total_price' => $order['quantity'] * $order['price'],
+                'reporting_date' => now()
             ]);
         }
 

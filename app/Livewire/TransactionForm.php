@@ -169,13 +169,17 @@ class TransactionForm extends Component
             Income::create([
                 'source' => 'rental',
                 'amount' => $convertedTotalRental,
-                'description' => $this->notes
+                'notes' => $this->notes
             ]);
 
             Income::create([
                 'source' => 'other',
                 'amount' => $convertedTotalOrders,
                 'notes' => $this->notes
+            ]);
+
+            Order::where('rental_id', $this->rentalId)->update([
+                'reporting_date' => $this->endTime
             ]);
 
             $this->resetRentalDetails();
