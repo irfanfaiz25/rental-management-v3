@@ -252,6 +252,7 @@ class TransactionForm extends Component
             $this->calculateGrandTotal();
         } else {
             unset($this->orders[$index]);
+            $this->calculateGrandTotal();
         }
     }
 
