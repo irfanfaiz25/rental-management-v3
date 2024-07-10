@@ -83,7 +83,7 @@
                             </div>
                         </td>
                         <td class="px-6 py-3">
-                            <div class="w-20">
+                            <div class="w-24">
                                 @currency($rental->total_price)
                             </div>
                         </td>

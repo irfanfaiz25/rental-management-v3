@@ -23,9 +23,7 @@
     </div>
 
     @if ($tabsPage == 'incomes')
-        <h2 class="text-3xl text-white">
-            Incomes
-        </h2>
+        @livewire('income-tab')
     @elseif ($tabsPage == 'rentalsHistory')
         @livewire('rental-history-tab')
     @elseif ($tabsPage == 'ordersHistory')

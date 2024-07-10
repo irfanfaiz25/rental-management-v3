@@ -287,7 +287,8 @@ class TransactionForm extends Component
                 'rental_id' => 0,
                 'menu_id' => $order['id'],
                 'quantity' => $order['quantity'],
-                'total_price' => $order['quantity'] * $order['price']
+                'total_price' => $order['quantity'] * $order['price'],
+                'reporting_date' => now()
             ]);
         }
 

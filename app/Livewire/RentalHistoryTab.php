@@ -27,7 +27,7 @@ class RentalHistoryTab extends Component
                     $this->dateFilterEnd . ' 23:59:59'
                 ]);
             })
-            ->latest()
+            ->orderBy('id', 'desc')
             ->paginate(6, pageName: 'rentals-history');
         return view('livewire.rental-history-tab', [
             'rentals' => $rentals

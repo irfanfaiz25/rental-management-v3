@@ -11,7 +11,7 @@ class ReportTabs extends Component
 {
     use WithPagination;
 
-    public $tabsPage = 'ordersHistory';
+    public $tabsPage = 'incomes';
 
 
     public function render()

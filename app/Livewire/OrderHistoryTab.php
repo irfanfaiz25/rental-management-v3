@@ -17,27 +17,26 @@ class OrderHistoryTab extends Component
 
     public function render()
     {
-        $orders = Order::with('rental', 'menu')
-            // ->when($this->search, function ($query) {
-            //     $query->whereHas('rental.console', function ($query) {
-            //         $query->where('name', 'like', '%' . $this->search . '%');
-            //     })
-            //         ->where('rental_id', '!=', 0);
-            // })
-            ->when($this->sourceFilter == 'rental', function ($query) {
-                $query->where('rental_id', '!=', 0);
-            })
-            ->when($this->sourceFilter == 'cash', function ($query) {
-                $query->where('rental_id', 0);
-            })
-            ->when($this->dateFilterStart && $this->dateFilterEnd, function ($query) {
-                $query->whereBetween('reporting_date', [
-                    $this->dateFilterStart . ' 00:00:00',
-                    $this->dateFilterEnd . ' 23:59:59'
-                ]);
-            })
-            ->latest()
+        $orders = Order::with('rental');
+
+        // Apply filters based on the source
+        if ($this->sourceFilter == 'rental') {
+            $orders->where('rental_id', '!=', 0);
+        } elseif ($this->sourceFilter == 'cash') {
+            $orders->where('rental_id', 0);
+        }
+
+        // Apply date filters if both start and end dates are provided
+        if ($this->dateFilterStart && $this->dateFilterEnd) {
+            $orders->whereBetween('reporting_date', [
+                $this->dateFilterStart . ' 00:00:00',
+                $this->dateFilterEnd . ' 23:59:59'
+            ]);
+        }
+
+        $orders = $orders->orderBy('id', 'desc')
             ->paginate(6, pageName: 'orders-history');
+
         return view('livewire.order-history-tab', [
             'orders' => $orders
         ]);
@@ -61,6 +60,7 @@ class OrderHistoryTab extends Component
     public function setSourceFilter($filter)
     {
         $this->sourceFilter = $filter;
+        $this->resetPage('orders-history');
     }
 
     public function resetRentalFilter()
