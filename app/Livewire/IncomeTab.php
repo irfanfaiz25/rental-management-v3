@@ -13,8 +13,10 @@ class IncomeTab extends Component
     public $totalIncome;
     public $rentalsIncome;
     public $othersIncome;
-    public $dateFilter;
+    public $dateFilterStart;
+    public $dateFilterEnd;
     public $incomeFilter = 'today';
+    public $months = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 
 
     public function render()
@@ -29,38 +31,44 @@ class IncomeTab extends Component
 
     public function getIncomesData()
     {
-        $this->totalIncome = Income::when($this->incomeFilter == 'today', function ($query) {
-            $query->whereDate('created_at', Carbon::today());
-        })->when($this->incomeFilter == 'week', function ($query) {
-            $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
-        })->when($this->incomeFilter == 'month', function ($query) {
-            $query->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
-        })->when($this->dateFilter, function ($query) {
-            $query->whereBetween('created_at', [$this->dateFilter . ' 00:00:00', $this->dateFilter . ' 23:59:59']);
-        })->sum('amount');
-
-        $this->rentalsIncome = Rental::when($this->incomeFilter == 'today', function ($query) {
-            $query->whereDate('created_at', Carbon::today());
-        })->when($this->incomeFilter == 'week', function ($query) {
-            $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
-        })->when($this->incomeFilter == 'month', function ($query) {
-            $query->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
-        })->when($this->dateFilter, function ($query) {
-            $query->whereBetween('created_at', [$this->dateFilter . ' 00:00:00', $this->dateFilter . ' 23:59:59']);
-        })->sum('total_price');
-
-        $this->othersIncome = Order::when($this->incomeFilter == 'today', function ($query) {
-            $query->whereDate('reporting_date', Carbon::today());
-        })->when($this->incomeFilter == 'week', function ($query) {
-            $query->whereBetween('reporting_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
-        })->when($this->incomeFilter == 'month', function ($query) {
-            $query->whereBetween('reporting_date', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
-        })->when($this->dateFilter, function ($query) {
-            $query->whereBetween('reporting_date', [$this->dateFilter . ' 00:00:00', $this->dateFilter . ' 23:59:59']);
-        })->sum('total_price');
+        $this->totalIncome = $this->applyFilters(Income::query())->sum('amount');
+        $this->rentalsIncome = $this->applyFilters(Rental::query())->sum('total_price');
+        $this->othersIncome = $this->applyOtherFilters(Order::query(), 'reporting_date')->sum('total_price');
     }
 
-    public function updatedDateFilter()
+    protected function applyFilters($query, $dateColumn = 'created_at')
+    {
+        return $query->when($this->incomeFilter == 'today', function ($query) use ($dateColumn) {
+            $query->whereDate($dateColumn, Carbon::today());
+        })->when($this->incomeFilter == 'week', function ($query) use ($dateColumn) {
+            $query->whereBetween($dateColumn, [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+        })->when($this->incomeFilter == 'month', function ($query) use ($dateColumn) {
+            $query->whereBetween($dateColumn, [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+        })->when($this->dateFilterStart && $this->dateFilterEnd, function ($query) use ($dateColumn) {
+            $query->whereBetween($dateColumn, [$this->dateFilterStart . ' 00:00:00', $this->dateFilterEnd . ' 23:59:59']);
+        });
+    }
+
+    protected function applyOtherFilters($query, $dateColumn = 'reporting_date')
+    {
+        return $query->when($this->incomeFilter == 'today', function ($query) use ($dateColumn) {
+            $query->whereDate($dateColumn, Carbon::today());
+        })->when($this->incomeFilter == 'week', function ($query) use ($dateColumn) {
+            $query->whereBetween($dateColumn, [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
+        })->when($this->incomeFilter == 'month', function ($query) use ($dateColumn) {
+            $query->whereBetween($dateColumn, [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+        })->when($this->dateFilterStart && $this->dateFilterEnd, function ($query) use ($dateColumn) {
+            $query->whereBetween($dateColumn, [$this->dateFilterStart . ' 00:00:00', $this->dateFilterEnd . ' 23:59:59']);
+        });
+    }
+
+    public function updatedDateFilterStart()
+    {
+        $this->incomeFilter = '';
+        $this->getIncomesData();
+    }
+
+    public function updatedDateFilterEnd()
     {
         $this->incomeFilter = '';
         $this->getIncomesData();
@@ -69,7 +77,8 @@ class IncomeTab extends Component
     public function setIncomeFilter($filter)
     {
         $this->incomeFilter = $filter;
-        $this->dateFilter = null;
+        $this->dateFilterStart = null;
+        $this->dateFilterEnd = null;
 
         $this->getIncomesData();
     }
@@ -77,7 +86,8 @@ class IncomeTab extends Component
     public function resetFilter()
     {
         $this->incomeFilter = 'today';
-        $this->dateFilter = null;
+        $this->dateFilterStart = null;
+        $this->dateFilterEnd = null;
 
         $this->getIncomesData();
     }
