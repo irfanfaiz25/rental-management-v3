@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->id();
             $table->string('source', 50);
             $table->decimal('amount', 10, 2);
-            $table->text('notes')->nullable();
             $table->timestamps();
         });
     }

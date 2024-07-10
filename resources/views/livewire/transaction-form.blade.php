@@ -81,15 +81,6 @@
                 </p>
             @enderror
         </div>
-        <div class="mb-5">
-            <label for="notes" class="block mb-1 text-sm font-bold">
-                Catatan <span class="text-gray-600 dark:text-gray-300">(opsional)</span>
-            </label>
-            <textarea wire:model='notes' type="text" id="notes"
-                class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium"
-                {{ !$isRequestRentalDetails ? 'readonly' : '' }} rows="3">
-            </textarea>
-        </div>
         <div class="flex space-x-1 mb-3">
             <button wire:click='resetRentalDetails'
                 class="w-full py-1.5 text-sm border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-gray-50 rounded-md">
@@ -222,11 +213,6 @@
                         </div>
 
                         <div class="flex justify-between mt-2 pr-5 text-gray-800 dark:text-gray-50 space-x-1">
-                            <div class="mb-5">
-                                <input wire:model='orderNotes' type="text" id="orderNotes"
-                                    class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium"
-                                    placeholder="Catatan (opsional)">
-                            </div>
                             <div class="flex justify-end space-x-1">
                                 <p class="text-sm font-semibold">
                                     Total

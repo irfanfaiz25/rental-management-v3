@@ -27,7 +27,6 @@ class TransactionForm extends Component
     public $granTotal;
     public $paid;
     public $paidInteger;
-    public $notes;
     public $changes;
     public $isNewOrderModalShow = false;
     public $newOrderConsole;
@@ -35,7 +34,6 @@ class TransactionForm extends Component
     public $grandTotal = 0;
     public $menuFilter = null;
     public $searchMenuName = null;
-    public $orderNotes;
 
 
     public function render()
@@ -85,7 +83,7 @@ class TransactionForm extends Component
     {
         $this->isRequestRentalDetails = false;
 
-        $this->reset('rentalId', 'consoleName', 'rentalTime', 'totalOrders', 'totalRental', 'granTotal', 'paid', 'notes', 'changes');
+        $this->reset('rentalId', 'consoleName', 'rentalTime', 'totalOrders', 'totalRental', 'granTotal', 'paid', 'changes');
     }
 
     function minutesToHours($minutes)
@@ -169,13 +167,11 @@ class TransactionForm extends Component
             Income::create([
                 'source' => 'rental',
                 'amount' => $convertedTotalRental,
-                'notes' => $this->notes
             ]);
 
             Income::create([
                 'source' => 'other',
                 'amount' => $convertedTotalOrders,
-                'notes' => $this->notes
             ]);
 
             Order::where('rental_id', $this->rentalId)->update([
@@ -203,7 +199,7 @@ class TransactionForm extends Component
     public function setNewOrderModalClose()
     {
         $this->isNewOrderModalShow = false;
-        $this->reset('orders', 'menuFilter', 'searchMenuName', 'grandTotal', 'orderNotes');
+        $this->reset('orders', 'menuFilter', 'searchMenuName', 'grandTotal');
         $this->resetPage('new-cash-order');
     }
 
@@ -295,7 +291,6 @@ class TransactionForm extends Component
         Income::create([
             'source' => 'other',
             'amount' => $this->grandTotal,
-            'notes' => $this->orderNotes
         ]);
 
         $this->setNewOrderModalClose();
