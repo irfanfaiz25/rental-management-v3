@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <div class="flex justify-start mt-3 space-x-3">
+    <div class="block md:flex justify-start mt-3 space-y-2 md:space-y-0 md:space-x-3">
         <div
             class="w-full h-44 bg-white dark:bg-[#252525] drop-shadow-sm py-7 px-5 rounded-md border-2 border-gray-200/80 dark:border-[#2d2d2d]">
             <div class="flex justify-between">
