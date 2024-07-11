@@ -73,7 +73,7 @@
                 </h1>
                 <i class="ri-hand-coin-line text-5xl text-yellow-500"></i>
             </div>
-            <h1 class="text-4xl font-bold pt-5 text-right">
+            <h1 class="sm:text-3xl lg:text-4xl font-bold pt-5 text-right">
                 @currency($totalIncome)
             </h1>
         </div>
@@ -85,7 +85,7 @@
                 </h1>
                 <i class="ri-gamepad-line text-5xl text-green-500"></i>
             </div>
-            <h1 class="text-4xl font-bold pt-5 text-right">
+            <h1 class="sm:text-3xl lg:text-4xl font-bold pt-5 text-right">
                 @currency($rentalsIncome)
             </h1>
         </div>
@@ -97,7 +97,7 @@
                 </h1>
                 <i class="ri-restaurant-2-line text-5xl text-blue-500"></i>
             </div>
-            <h1 class="text-4xl font-bold pt-5 text-right">
+            <h1 class="sm:text-3xl lg:text-4xl font-bold pt-5 text-right">
                 @currency($othersIncome)
             </h1>
         </div>

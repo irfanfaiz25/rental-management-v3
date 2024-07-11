@@ -18,7 +18,7 @@
         <button wire:click="setTabsPage('expenditures')"
             class="flex w-full items-center justify-center px-6 py-4 bg-white dark:bg-[#252525] {{ $tabsPage == 'expenditures' ? 'text-green-500' : 'text-gray-800 dark:text-gray-50' }} hover:text-green-500 dark:hover:text-green-500 text-sm font-semibold capitalize rounded-lg shadow-lg">
             <i class="ri-creative-commons-nc-fill text-base pr-2"></i>
-            Expenditure
+            Expenditures
         </button>
     </div>
 
@@ -29,9 +29,7 @@
     @elseif ($tabsPage == 'ordersHistory')
         @livewire('order-history-tab')
     @else
-        <h2 class="text-3xl text-white">
-            Expenditures
-        </h2>
+        @livewire('expenditure-tab')
     @endif
 
 </div>

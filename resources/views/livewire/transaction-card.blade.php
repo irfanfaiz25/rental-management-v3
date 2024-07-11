@@ -150,7 +150,7 @@
                 class="bg-white dark:bg-[#1c1c1c] dark:text-gray-50 p-6 rounded shadow-lg max-w-lg w-full relative z-10 max-h-full overflow-y-auto mx-2 lg:mx-0">
                 <div class="p-3">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-200">
-                        Are you sure you want to end {{ $endName }}?
+                        Are you sure you want to end <strong>{{ $endName }}</strong>?
                     </h2>
                     <div class="mt-6 flex justify-end space-x-1">
                         <button wire:click='setEndModalClose'

@@ -119,6 +119,6 @@
     </div>
 
     <div class="mt-3">
-        {{ $orders->links('vendor.livewire.tailwind') }}
+        {{ $orders->links('vendor.livewire.tailwind', data: ['scrollTo' => false]) }}
     </div>
 </div>
