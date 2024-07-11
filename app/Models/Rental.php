@@ -10,6 +10,8 @@ class Rental extends Model
     use HasFactory;
     protected $fillable = [
         'console_id',
+        'customer_name',
+        'timer',
         'start_time',
         'end_time',
         'total_price',

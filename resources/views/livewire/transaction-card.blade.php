@@ -19,13 +19,18 @@
                 class="border-4 border-white bg-gradient-to-b 
             {{ $console->is_active ? 'from-[#345281] to-[#0FF0BB]' : 'from-[#BE3144] to-[#F05941]' }}
                          text-white rounded-lg shadow-md p-1 text-center h-60">
-                <div class="flex justify-center mt-1">
+                <div class="flex justify-center {{ $console->is_active ? 'mt-1' : 'mt-5' }}">
                     <i class="ri-tv-line text-3xl"></i>
                 </div>
                 <h2 class="text-xl font-bold">
                     {{ $console->name }}
                 </h2>
-                <div class="mt-4 mb-3 flex justify-center p-2 rounded-md mx-2">
+                @if ($console->is_active)
+                    <h2 class="text-base font-bold capitalize">
+                        {{ $console->currentRental->customer_name }}
+                    </h2>
+                @endif
+                <div class="mt-1 mb-1 flex justify-center p-1 rounded-md mx-2">
                     <p class="text-sm pt-1">
                         {{ $console->is_active ? 'Started' : 'Ready' }}
                     </p>
@@ -35,6 +40,18 @@
                         @endif
                     </div>
                 </div>
+                @if ($console->is_active)
+                    <h2 class="text-sm font-semibold">
+                        @if ($console->currentRental->timer === 0)
+                            Timer off
+                        @else
+                            Timer on
+                            <strong>
+                                {{ $this->getAdditionTime($console->currentRental->start_time, $console->currentRental->timer) }}
+                            </strong>
+                        @endif
+                    </h2>
+                @endif
                 <div class="flex justify-center space-x-1">
                     @if ($console->is_active)
                         <button
@@ -63,6 +80,13 @@
                                         class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-50 hover:text-green-500 dark:hover:text-green-500 hover:bg-gray-100 dark:hover:bg-[#343434]">
                                         Edit
                                     </a>
+                                    @if ($console->currentRental->timer !== 0)
+                                        <a href="#" @click="open = false"
+                                            wire:click.prevent="setExtraTimeModalOpen({{ $console->currentRental ? $console->currentRental->id : null }})"
+                                            class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-50 hover:text-green-500 dark:hover:text-green-500 hover:bg-gray-100 dark:hover:bg-[#343434]">
+                                            Extra Time
+                                        </a>
+                                    @endif
                                     <a href="#" @click="open = false"
                                         wire:click.prevent="setNewOrderModalOpen({{ $console->currentRental ? $console->currentRental->id : '' }})"
                                         class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-50 hover:text-green-500 dark:hover:text-green-500 hover:bg-gray-100 dark:hover:bg-[#343434]">
@@ -101,10 +125,22 @@
                 class="bg-white dark:bg-[#1c1c1c] dark:text-gray-50 p-6 rounded shadow-lg max-w-lg w-full relative z-10 max-h-full overflow-y-auto mx-2 lg:mx-0">
                 <div class="py-3">
                     <h2 class="text-left text-2xl font-bold text-gray-800 dark:text-gray-50">
-                        {{ $isEditStartTime ? 'Edit ' : '' }}Start Rental
+                        {{ $isEditRental ? 'Edit ' : '' }}Start Rental
                     </h2>
                 </div>
-                <form wire:submit.prevent='{{ $isEditStartTime ? 'editStartRental' : 'startRental' }}'>
+                <form wire:submit.prevent='{{ $isEditRental ? 'editStartRental' : 'startRental' }}'>
+                    <div class="mb-2">
+                        <label for="customerName" class="block mb-1 text-sm font-bold">
+                            Customer Name
+                        </label>
+                        <input wire:model='customerName' type="text" id="customerName"
+                            class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('customerName') border-red-500 @enderror" />
+                        @error('customerName')
+                            <p class="mt-2 text-xs text-red-600">
+                                {{ $message }}
+                            </p>
+                        @enderror
+                    </div>
                     <div class="mb-2">
                         <label for="startDate" class="block mb-1 text-sm font-bold">
                             Start Date
@@ -124,6 +160,24 @@
                         <input wire:model='startTime' type="time" id="startTime"
                             class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('startTime') border-red-500 @enderror" />
                         @error('startTime')
+                            <p class="mt-2 text-xs text-red-600">
+                                {{ $message }}
+                            </p>
+                        @enderror
+                    </div>
+                    <div class="mb-2">
+                        <label for="timer" class="block mb-1 text-sm font-bold">
+                            Set Timer (in minutes)
+                        </label>
+                        <div class="flex items-center space-x-2">
+                            <input wire:model='timer' type="number" id="timer"
+                                class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('timer') border-red-500 @enderror"
+                                min="0" />
+                            <p class="text-sm font-medium text-gray-800 dark:text-gray-50">
+                                Minutes
+                            </p>
+                        </div>
+                        @error('timer')
                             <p class="mt-2 text-xs text-red-600">
                                 {{ $message }}
                             </p>
@@ -389,6 +443,49 @@
             </div>
             <!-- Background overlay -->
             <div wire:click="setResetRentalModalClose" class="fixed inset-0 bg-black opacity-50 z-0"></div>
+        </div>
+    @endif
+
+    @if ($isExtraTimeModalShow)
+        <div class="fixed inset-0 flex items-center justify-center z-50">
+            <div
+                class="bg-white dark:bg-[#1c1c1c] dark:text-gray-50 p-6 rounded shadow-lg max-w-lg w-full relative z-10 max-h-full overflow-y-auto mx-2 lg:mx-0">
+                <div class="py-3">
+                    <h2 class="text-left text-2xl font-bold text-gray-800 dark:text-gray-50">
+                        Extra Time
+                    </h2>
+                </div>
+                <form wire:submit.prevent='setExtraTime'>
+                    <div class="mb-2">
+                        <label for="timer" class="block mb-1 text-sm font-bold">
+                            Add Extra Time (in minutes)
+                        </label>
+                        <div class="flex items-center space-x-2">
+                            <input wire:model='extraTime' type="number" id="extraTime"
+                                class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('extraTime') border-red-500 @enderror"
+                                min="0" />
+                            <p class="text-sm font-medium text-gray-800 dark:text-gray-50">
+                                Minutes
+                            </p>
+                        </div>
+                        @error('extraTime')
+                            <p class="mt-2 text-xs text-red-600">
+                                {{ $message }}
+                            </p>
+                        @enderror
+                    </div>
+                    <div class="mt-5 flex justify-end space-x-2">
+                        <button type="button" wire:click="setExtraTimeModalClose"
+                            class="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-bold rounded-lg cursor-pointer text-sm w-full sm:w-auto px-4 py-2 text-center dark:bg-red-500 dark:hover:bg-red-700 dark:focus:ring-red-800">Cancel</button>
+                        <button type="submit"
+                            class="text-white bg-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-bold rounded-lg cursor-pointer text-sm w-full sm:w-auto px-5 py-2 text-center dark:bg-green-500 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- Background overlay -->
+            <div wire:click="setExtraTimeModalClose" class="fixed inset-0 bg-black opacity-50 z-0"></div>
         </div>
     @endif
 

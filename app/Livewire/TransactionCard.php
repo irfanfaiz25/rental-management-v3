@@ -18,10 +18,12 @@ class TransactionCard extends Component
 
     public $searchConsole;
     public $isStartModalShow = false;
+    public $customerName;
     public $startDate;
     public $startTime;
+    public $timer = 0;
     public $startId;
-    public $isEditStartTime;
+    public $isEditRental;
     public $editStartId;
     public $rentalId;
     public $isEndModalShow = false;
@@ -39,6 +41,9 @@ class TransactionCard extends Component
     public $isResetRentalModalShow = false;
     public $resetRentalId;
     public $resetRentalName;
+    public $isExtraTimeModalShow = false;
+    public $extraTimeId;
+    public $extraTime = 0;
 
 
     #[On('rental-done')]
@@ -74,21 +79,23 @@ class TransactionCard extends Component
     public function setStartModalClose()
     {
         $this->isStartModalShow = false;
-        $this->isEditStartTime = false;
+        $this->isEditRental = false;
 
-        $this->reset('startDate', 'startTime', 'startId', 'editStartId');
+        $this->reset('customerName', 'timer', 'startDate', 'startTime', 'startId', 'editStartId');
     }
 
     public function setEditStartModalOpen($rentalId)
     {
         $this->isStartModalShow = true;
-        $this->isEditStartTime = true;
+        $this->isEditRental = true;
         $this->editStartId = $rentalId;
 
         $rental = Rental::find($rentalId);
 
+        $this->customerName = $rental->customer_name;
         $this->startDate = Carbon::parse($rental->start_time)->format('Y-m-d');
         $this->startTime = Carbon::parse($rental->start_time)->format('H:i');
+        $this->timer = $rental->timer;
     }
 
     public function setEndModalOpen($rentalId)
@@ -110,17 +117,25 @@ class TransactionCard extends Component
     public function startRental()
     {
         $validated = $this->validate([
+            'timer' => 'integer|min:0',
             'startDate' => 'required',
-            'startTime' => 'required'
+            'startTime' => 'required',
         ]);
+
+        $customerName = $this->customerName;
+        if (!$customerName) {
+            $customerName = 'user';
+        }
 
         $dateTimeString = $validated['startDate'] . ' ' . $validated['startTime'];
         $datetime = Carbon::createFromFormat('Y-m-d H:i', $dateTimeString);
 
         Rental::create([
             'console_id' => $this->startId,
+            'customer_name' => $customerName,
+            'timer' => $validated['timer'],
             'start_time' => $datetime,
-            'status' => 'active'
+            'status' => 'active',
         ]);
 
         $console = Console::find($this->startId);
@@ -135,14 +150,22 @@ class TransactionCard extends Component
     public function editStartRental()
     {
         $validated = $this->validate([
+            'timer' => 'integer|min:0',
             'startDate' => 'required',
-            'startTime' => 'required'
+            'startTime' => 'required',
         ]);
+
+        $customerName = $this->customerName;
+        if (!$customerName) {
+            $customerName = 'user';
+        }
 
         $dateTimeString = $validated['startDate'] . ' ' . $validated['startTime'];
         $datetime = Carbon::createFromFormat('Y-m-d H:i', $dateTimeString);
 
         $rental = Rental::find($this->editStartId);
+        $rental->customer_name = $customerName;
+        $rental->timer = $validated['timer'];
         $rental->start_time = $datetime;
         $rental->save();
 
@@ -151,9 +174,43 @@ class TransactionCard extends Component
         toastr()->success($rental->console->name . ' edited');
     }
 
+    public function setExtraTimeModalOpen($rentalId)
+    {
+        $this->isExtraTimeModalShow = true;
+        $this->extraTimeId = $rentalId;
+    }
+
+    public function setExtraTimeModalClose()
+    {
+        $this->isExtraTimeModalShow = false;
+        $this->reset('extraTime', 'extraTimeId');
+    }
+
+    public function setExtraTime()
+    {
+        $validated = $this->validate([
+            'extraTime' => 'integer|min:0'
+        ]);
+
+        $rental = Rental::find($this->extraTimeId);
+        $rental->timer += $validated['extraTime'];
+        $rental->save();
+
+        $this->setExtraTimeModalClose();
+
+        toastr()->success('Extra time updated');
+    }
+
+    public function getAdditionTime($time, $timer)
+    {
+        $convertedTime = Carbon::parse($time);
+        $endTime = $convertedTime->addMinutes($timer);
+
+        return $endTime->format('H:i');
+    }
+
     public function setRentalDetails()
     {
-
         $this->dispatch('rental-details', consoleId: $this->endId, rentalId: $this->rentalId, endTime: $this->endTime);
 
         $this->setEndModalClose();

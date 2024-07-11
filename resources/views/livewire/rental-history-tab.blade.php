@@ -40,7 +40,10 @@
                         No
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Console Name
+                        Customer
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Console
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
                         Start Time
@@ -62,6 +65,9 @@
                         class="odd:bg-white odd:dark:bg-[#343434] even:bg-gray-50 even:dark:bg-[#383838] border-b dark:border-[#414040]">
                         <td class="px-6 py-3">
                             {{ $rentals->firstItem() + $index }}
+                        </td>
+                        <td class="px-6 py-3 capitalize">
+                            {{ $rental->customer_name }}
                         </td>
                         <td class="px-6 py-3 capitalize">
                             {{ $rental->console->name }}

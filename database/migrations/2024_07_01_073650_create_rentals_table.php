@@ -13,6 +13,8 @@ return new class extends Migration {
         Schema::create('rentals', function (Blueprint $table) {
             $table->id();
             $table->integer('console_id');
+            $table->string('customer_name', 100)->nullable();
+            $table->integer('timer');
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
             $table->decimal('total_price', 10, 2)->nullable();

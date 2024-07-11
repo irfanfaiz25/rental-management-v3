@@ -19,6 +19,7 @@ class TransactionForm extends Component
 
     public $isRequestRentalDetails = false;
     public $rentalId;
+    public $customerName;
     public $consoleName;
     public $rentalTime;
     public $endTime;
@@ -71,6 +72,7 @@ class TransactionForm extends Component
 
         $convertedGranTotal = $this->rupiahFormat($totalOrders + $roundedTotalPrice);
 
+        $this->customerName = $console->currentRental->customer_name;
         $this->consoleName = $console->name;
         $this->rentalTime = $convertedRentalTime;
         $this->totalRental = $convertedTotalPrice;
@@ -83,7 +85,7 @@ class TransactionForm extends Component
     {
         $this->isRequestRentalDetails = false;
 
-        $this->reset('rentalId', 'consoleName', 'rentalTime', 'totalOrders', 'totalRental', 'granTotal', 'paid', 'changes');
+        $this->reset('rentalId', 'customerName', 'consoleName', 'rentalTime', 'totalOrders', 'totalRental', 'granTotal', 'paid', 'changes');
     }
 
     function minutesToHours($minutes)

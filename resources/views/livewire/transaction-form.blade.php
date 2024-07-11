@@ -4,6 +4,19 @@
             DATA PEMBAYARAN
         </h2>
         <div class="mb-2">
+            <label for="customerName" class="block mb-1 text-sm font-bold">
+                Nama Customer
+            </label>
+            <input wire:model='customerName' type="text" id="customerName"
+                class="bg-gray-50 outline-none border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2 dark:bg-[#343434] dark:border-gray-500 dark:text-gray-50 dark:focus:ring-green-500 dark:focus:border-green-500 font-medium @error('customerName') border-red-500 @enderror"
+                readonly />
+            @error('customerName')
+                <p class="mt-2 text-xs text-red-600">
+                    {{ $message }}
+                </p>
+            @enderror
+        </div>
+        <div class="mb-2">
             <label for="consoleName" class="block mb-1 text-sm font-bold">
                 Nama Console
             </label>
@@ -81,7 +94,7 @@
                 </p>
             @enderror
         </div>
-        <div class="flex space-x-1 mb-3">
+        <div class="flex space-x-1 mb-1 mt-5">
             <button wire:click='resetRentalDetails'
                 class="w-full py-1.5 text-sm border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-gray-50 rounded-md">
                 Reset
