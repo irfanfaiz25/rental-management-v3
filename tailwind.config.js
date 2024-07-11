@@ -9,7 +9,11 @@ export default {
         // Add paths to your views and components here
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                sans: ["Fira Sans", "sans-serif"],
+            },
+        },
     },
     plugins: [],
 };
