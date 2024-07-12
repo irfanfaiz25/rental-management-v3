@@ -96,7 +96,7 @@
                         <td class="px-6 py-3">
                             <div class="flex justify-center">
                                 <div class="text-xs px-1 py-1 w-36 rounded-full text-center bg-blue-500 text-gray-50">
-                                    @date($order->created_at)
+                                    @date($order->reporting_date)
                                 </div>
                             </div>
                         </td>

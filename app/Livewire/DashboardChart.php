@@ -21,8 +21,8 @@ class DashboardChart extends Component
 
     public function getWeeklyIncomeData()
     {
-        $weeklyIncomes = Income::selectRaw('DAYOFWEEK(created_at) as day, SUM(amount) as total')
-            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+        $weeklyIncomes = Income::selectRaw('DAYOFWEEK(reporting_date) as day, SUM(amount) as total')
+            ->whereBetween('reporting_date', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->groupBy('day')
             ->get();
 
@@ -40,13 +40,13 @@ class DashboardChart extends Component
             ->groupBy('day')
             ->get();
 
-        $rentalsData = array_fill(0, 7, 0);
+        $expendituresData = array_fill(0, 7, 0);
 
         foreach ($weeklyExpenditures as $rental) {
-            $rentalsData[$rental->day - 1] = $rental->total;
+            $expendituresData[$rental->day - 1] = $rental->total;
         }
 
-        $this->weeklyExpenditures = $rentalsData;
+        $this->weeklyExpenditures = $expendituresData;
     }
 
     public function render()

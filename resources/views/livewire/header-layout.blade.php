@@ -20,7 +20,13 @@
                     <div class="px-4 pt-1 pb-2">
                         <div class="flex items-center space-x-2 pl-1 py-1">
                             <i class="ri-account-circle-fill text-2xl"></i>
-                            <span class="font-semibold">Aji</span>
+                            <span class="font-semibold">
+                                @if (Auth::check())
+                                    {{ Auth::user()->name }}
+                                @else
+                                    User
+                                @endif
+                            </span>
                         </div>
                     </div>
 
@@ -45,7 +51,7 @@
 
                     <div class="border-t border-gray-200/80 dark:border-[#3c3c3c]">
                         <div class="mx-1 pt-2">
-                            <div
+                            <div wire:click='logout'
                                 class="hover:bg-gray-200 dark:hover:bg-[#373636] px-4 py-2 rounded-md flex items-center space-x-2 text-sm cursor-pointer">
                                 <i class="ri-logout-circle-line text-xl"></i>
                                 <span>Sign out</span>

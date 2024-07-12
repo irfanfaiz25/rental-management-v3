@@ -31,9 +31,9 @@ class IncomeTab extends Component
 
     public function getIncomesData()
     {
-        $this->totalIncome = $this->applyFilters(Income::query())->sum('amount');
+        $this->totalIncome = $this->applyOtherFilters(Income::query())->sum('amount');
         $this->rentalsIncome = $this->applyFilters(Rental::query())->sum('total_price');
-        $this->othersIncome = $this->applyOtherFilters(Order::query(), 'reporting_date')->sum('total_price');
+        $this->othersIncome = $this->applyOtherFilters(Order::query())->sum('total_price');
     }
 
     protected function applyFilters($query, $dateColumn = 'created_at')

@@ -23,7 +23,7 @@ class DashboardCard extends Component
     public function mount()
     {
         $this->rentalReady = Console::where('is_active', false)->count();
-        $this->todaysIncome = Income::whereDate('created_at', Carbon::today())->sum('amount');
+        $this->todaysIncome = Income::whereDate('reporting_date', Carbon::today())->sum('amount');
         $this->todaysExpenditure = Expenditure::whereDate('created_at', Carbon::today())->sum('amount');
     }
 }

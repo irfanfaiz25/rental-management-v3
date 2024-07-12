@@ -156,6 +156,7 @@ class TransactionForm extends Component
             toastr()->warning('Nominal yang dibayarkan kurang');
         } else {
             $rental = Rental::find($this->rentalId);
+            $startTime = $rental->start_time;
             $consoleId = $rental->console_id;
             $rental->end_time = $this->endTime;
             $rental->total_price = $convertedTotalRental;
@@ -169,15 +170,17 @@ class TransactionForm extends Component
             Income::create([
                 'source' => 'rental',
                 'amount' => $convertedTotalRental,
+                'reporting_date' => $startTime
             ]);
 
             Income::create([
                 'source' => 'other',
                 'amount' => $convertedTotalOrders,
+                'reporting_date' => $startTime
             ]);
 
             Order::where('rental_id', $this->rentalId)->update([
-                'reporting_date' => $this->endTime
+                'reporting_date' => $startTime
             ]);
 
             $this->resetRentalDetails();
@@ -293,6 +296,7 @@ class TransactionForm extends Component
         Income::create([
             'source' => 'other',
             'amount' => $this->grandTotal,
+            'reporting_date' => now()
         ]);
 
         $this->setNewOrderModalClose();

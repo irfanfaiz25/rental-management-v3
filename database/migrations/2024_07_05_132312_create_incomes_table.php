@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('source', 50);
             $table->decimal('amount', 10, 2);
+            $table->timestamp('reporting_date')->nullable();
             $table->timestamps();
         });
     }

@@ -11,6 +11,7 @@ class Income extends Model
     protected $fillable = [
         'source',
         'amount',
-        'notes'
+        'notes',
+        'reporting_date'
     ];
 }
