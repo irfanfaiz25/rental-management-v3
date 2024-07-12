@@ -8,7 +8,7 @@
                 Consoles
             </h1>
             <h1 class="text-base pt-1 font-medium text-gray-800 dark:text-gray-50">
-                Rental PS Management
+                Rental Management
             </h1>
         </div>
     </div>

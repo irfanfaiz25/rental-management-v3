@@ -52,6 +52,9 @@
                         Source
                     </th>
                     <th scope="col" class="px-6 py-3">
+                        Customer
+                    </th>
+                    <th scope="col" class="px-6 py-3">
                         Menu
                     </th>
                     <th scope="col" class="px-6 py-3">
@@ -62,9 +65,6 @@
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
                         Date
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Action
                     </th>
                 </tr>
             </thead>
@@ -83,6 +83,9 @@
                             @endif
                         </td>
                         <td class="px-6 py-3 capitalize">
+                            {{ $order->rental ? $order->rental->customer_name : 'Cash' }}
+                        </td>
+                        <td class="px-6 py-3 capitalize">
                             {{ $order->menu->name }}
                         </td>
                         <td class="px-6 py-3">
@@ -98,18 +101,6 @@
                                 <div class="text-xs px-1 py-1 w-36 rounded-full text-center bg-blue-500 text-gray-50">
                                     @date($order->reporting_date)
                                 </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-3">
-                            <div class="flex justify-start items-center space-x-1">
-                                <button
-                                    class="text-green-500 hover:text-white border border-green-500 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-semibold rounded-lg text-xs px-4 py-1 text-center dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
-                                    Edit
-                                </button>
-                                <button
-                                    class="text-red-500 hover:text-white border border-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-semibold rounded-lg text-xs px-4 py-1 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-800">
-                                    Delete
-                                </button>
                             </div>
                         </td>
                     </tr>

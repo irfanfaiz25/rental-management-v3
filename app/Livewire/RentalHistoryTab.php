@@ -3,23 +3,30 @@
 namespace App\Livewire;
 
 use App\Models\Rental;
+use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class RentalHistoryTab extends Component
 {
     use WithPagination;
-    public $search;
     public $dateFilterStart;
     public $dateFilterEnd;
+    public $rentalFilter = 'today';
 
 
     public function render()
     {
         $rentals = Rental::where('status', 'completed')
             ->with('console')
-            ->whereHas('console', function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%');
+            ->when($this->rentalFilter == 'today', function ($query) {
+                $query->whereDate('created_at', Carbon::today());
+            })
+            ->when($this->rentalFilter == 'yesterday', function ($query) {
+                $query->whereDate('created_at', Carbon::yesterday());
+            })
+            ->when($this->rentalFilter == 'week', function ($query) {
+                $query->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()]);
             })
             ->when($this->dateFilterStart && $this->dateFilterEnd, function ($query) {
                 $query->whereBetween('created_at', [
@@ -34,25 +41,30 @@ class RentalHistoryTab extends Component
         ]);
     }
 
-    public function updatingSearch()
-    {
-        $this->resetPage('rentals-history');
-    }
 
     public function updatingDateFilterStart()
     {
         $this->resetPage('rentals-history');
+        $this->rentalFilter = '';
     }
 
     public function updatingDateFilterEnd()
     {
         $this->resetPage('rentals-history');
+        $this->rentalFilter = '';
+    }
+
+    public function setRentalFilter($filter)
+    {
+        $this->rentalFilter = $filter;
+        $this->dateFilterStart = null;
+        $this->dateFilterEnd = null;
     }
 
     public function resetRentalFilter()
     {
-        $this->search = '';
         $this->dateFilterStart = null;
         $this->dateFilterEnd = null;
+        $this->rentalFilter = 'today';
     }
 }
