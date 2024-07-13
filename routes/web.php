@@ -24,6 +24,10 @@ Route::middleware('auth')->group(function () {
     })->name('report.index');
 });
 
+Route::get('/testReport', function () {
+    return view('pdf.finance-report');
+});
+
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login')->middleware('guest');

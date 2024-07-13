@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>e-PosAja Report</title>
+    <title>Rentals Report</title>
 
     <style>
         body {
@@ -14,6 +14,14 @@
 
         .table-border {
             border: 1.5px solid #292929;
+        }
+
+        .table-space-right {
+            margin-right: 0px;
+        }
+
+        .table-space-left {
+            margin-top: 20px;
         }
 
         .table-text-center {
@@ -113,6 +121,8 @@
             display: flex;
             justify-content: center;
             text-align: center;
+            font-size: 20px;
+            line-height: 2rem;
         }
 
         .mt-20 {
@@ -158,85 +168,240 @@
         .table-header {
             padding: 10px 5px 10px;
         }
+
+        .flex {
+            display: flex;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .bg-gray {
+            background-color: #4d4d4d;
+            color: white;
+        }
+
+        .py-5 {
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .px-5 {
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
+        }
+
+        .rounded-md {
+            border-radius: 0.2rem;
+        }
+
+        .w-full {
+            width: 100%;
+        }
+
+        .finance-info {
+            display: flex;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-right: 0px;
+            padding-left: 0px;
+            width: full;
+            justify-content: space-evenly;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .currency-number {
+            padding-left: 5px;
+            font-size: 30px;
+            font-weight: 600;
+        }
+
+        .table-content {
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .text-total {
+            font-size: 15px;
+
+        }
+
+        .number-total {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        body {
+            padding: 10px;
+        }
     </style>
 </head>
 
 <body>
-    <h2 class="title">
-        Hasil Analisa Evaluasi Pengalaman Penggunaan Aplikasi PosAja
-    </h2>
-    <table class="table-border">
+    <div>
+        <p>@justDate($dateStart) - @justDate($dateEnd)</p>
+    </div>
+    <div class="flex bg-gray py-5 rounded-md w-full mb-2 justify-center">
+        <h2 class="title">
+            Rentals Report Data
+        </h2>
+    </div>
+
+    <table>
         <thead>
-            <tr class="table-border table-text-center">
-                <th class="table-border table-header">
-                    NO
+            <tr>
+                <th>
+                    <div class="flex">
+                        <p>Incomes</p>
+                        <p class="currency-number">
+                            @currency($incomeTotal)
+                        </p>
+                    </div>
                 </th>
-                <th class="table-border table-header">
-                    Pertanyaan
+                <th>
+                    <div class="flex">
+                        <p>Expenditure</p>
+                        <p class="currency-number">
+                            @currency($expenditureTotal)
+                        </p>
+                    </div>
                 </th>
-                <th class="table-border table-header">
-                    Variable
-                </th>
-                <th class="table-border table-header">
-                    Total Skor
-                </th>
-                <th class="table-border table-header">
-                    AVG Skor (%)
-                </th>
-                <th class="table-border table-header">
-                    Analisa
+                <th>
+                    <div class="flex">
+                        <p>Profits</p>
+                        <p class="currency-number">
+                            @currency($profitTotal)
+                        </p>
+                    </div>
                 </th>
             </tr>
         </thead>
-        <tbody>
-            @php
-                $num = 1;
-            @endphp
-            @foreach ($analysisResults as $index => $result)
+    </table>
+
+    <div class="table-content">
+        <h2 class="title">
+            Incomes Data
+        </h2>
+        <table class="table-border table-space-right">
+            <thead>
                 <tr class="table-border table-text-center">
-                    <td class="table-border table-text-center">
-                        <span>{{ $num++ }}</span>
+                    <th class="table-border table-header">
+                        No
+                    </th>
+                    <th class="table-border table-header">
+                        Date
+                    </th>
+                    <th class="table-border table-header">
+                        Source
+                    </th>
+                    <th class="table-border table-header">
+                        Amount
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $num = 1;
+                @endphp
+                @foreach ($incomes as $income)
+                    <tr class="table-border table-text-center">
+                        <td class="table-border table-text-center">
+                            <span>{{ $num++ }}</span>
+                        </td>
+                        <td class="table-border text-left">
+                            <span>
+                                @justDate($income->reporting_date)
+                            </span>
+                        </td>
+                        <td class="table-border table-text-center">
+                            <span>
+                                {{ $income->source }}
+                            </span>
+                        </td>
+                        <td class="table-border table-text-center">
+                            <span>
+                                @currency($income->amount)
+                            </span>
+                        </td>
+                    </tr>
+                @endforeach
+                <tr>
+                    <td colspan="3" class="table-text-center table-border text-total">
+                        <p>Total</p>
                     </td>
-                    <td class="table-border text-left">
-                        <span>
-                            <ul>
-                                @foreach ($result['questions'] as $question)
-                                    <li>
-                                        {{ $question }}
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </span>
-                    </td>
-                    <td class="table-border table-text-center">
-                        <span>{{ $result['variable'] }}</span>
-                    </td>
-                    <td class="table-border table-text-center">
-                        <span>{{ $result['total_score'] }}</span>
-                    </td>
-                    <td class="table-border table-text-center">
-                        <span>{{ $result['average_score'] }}</span>
-                    </td>
-                    <td class="table-border table-text-center">
-                        <div class="mother-box">
-                            <p class="mb-2">
-                                {{ $result['category_score'] }}
-                            </p>
-                            <div class="box">
-                                @if ($result['category_score'] === 'kurang baik')
-                                    <div class="box-inner-red"></div>
-                                @elseif ($result['category_score'] === 'sangat baik')
-                                    <div class="box-inner-green"></div>
-                                @else
-                                    <div></div>
-                                @endif
-                            </div>
-                        </div>
+                    <td class="table-text-center number-total">
+                        <p>
+                            @currency($incomeTotal)
+                        </p>
                     </td>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <h2 class="title">
+            Expenditure Data
+        </h2>
+        <table class="table-border table-space-left">
+            <thead>
+                <tr class="table-border table-text-center">
+                    <th class="table-border table-header">
+                        No
+                    </th>
+                    <th class="table-border table-header">
+                        Date
+                    </th>
+                    <th class="table-border table-header">
+                        Items
+                    </th>
+                    <th class="table-border table-header">
+                        Amount
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $num = 1;
+                @endphp
+                @foreach ($expenditures as $expenditure)
+                    <tr class="table-border table-text-center">
+                        <td class="table-border table-text-center">
+                            <span>{{ $num++ }}</span>
+                        </td>
+                        <td class="table-border text-left">
+                            <span>
+                                {{ $expenditure->expend_date }}
+                            </span>
+                        </td>
+                        <td class="table-border table-text-center">
+                            <span>
+                                {{ $expenditure->name }}
+                            </span>
+                        </td>
+                        <td class="table-border table-text-center">
+                            <span>
+                                @currency($expenditure->amount)
+                            </span>
+                        </td>
+                    </tr>
+                @endforeach
+                <tr>
+                    <td colspan="3" class="table-text-center table-border text-total">
+                        <p class="info-total">Total</p>
+                    </td>
+                    <td class="table-text-center number-total">
+                        <p class="info-total">
+                            @currency($expenditureTotal)
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

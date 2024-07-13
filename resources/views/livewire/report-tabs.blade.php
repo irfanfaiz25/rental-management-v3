@@ -2,7 +2,7 @@
     <div class="block md:flex justify-center space-y-1 md:space-y-0 md:space-x-4">
         <button wire:click="setTabsPage('incomes')"
             class="flex w-full items-center justify-center px-6 py-4 bg-white dark:bg-[#252525] {{ $tabsPage == 'incomes' ? 'text-green-500' : 'text-gray-800 dark:text-gray-50' }} hover:text-green-500 dark:hover:text-green-500 text-sm font-semibold capitalize rounded-lg shadow-lg">
-            <i class="ri-gamepad-fill text-base pr-2"></i>
+            <i class="ri-coins-fill text-base pr-2"></i>
             Incomes
         </button>
         <button wire:click="setTabsPage('rentalsHistory')"

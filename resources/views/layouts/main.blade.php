@@ -9,7 +9,7 @@
     <title>Document</title>
 
     {{-- logo title --}}
-    {{-- <link rel="icon" href="{{ asset('assets/img/logo.png') }}"> --}}
+    <link rel="icon" href="{{ asset('img/Logo.png') }}">
 
     <!-- Include Tailwind CSS -->
     @vite('resources/css/app.css')
